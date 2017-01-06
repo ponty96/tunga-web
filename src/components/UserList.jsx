@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, IndexLink} from 'react-router';
+import { Link, IndexLink } from 'react-router';
 import Progress from './status/Progress';
 import LoadMore from './status/LoadMore';
 import UserCard from './UserCard';
@@ -7,44 +7,18 @@ import SearchBox from './SearchBox';
 
 export default class UserList extends React.Component {
 
-    componentDidMount() {
-        this.props.UserActions.listUsers({
-            filter: this.getFilter(),
-            skill: this.getSkill(), ...this.props.filters,
-            search: this.props.search
-        });
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.location && this.props.location && prevProps.location.pathname != this.props.location.pathname || prevProps.search != this.props.search) {
-            this.props.UserActions.listUsers({
-                filter: this.getFilter(),
-                skill: this.getSkill(), ...this.props.filters,
-                search: this.props.search
-            });
-        }
-    }
-
-    getFilter() {
-        if (this.props.params && this.props.params.filter) {
-            return this.props.params.filter;
-        }
-        return null;
-    }
-
-    getSkill() {
-        if (this.props.params && this.props.params.skill) {
-            return this.props.params.skill;
-        }
-        return null;
-    }
-
     render() {
-        const {Auth, User, Notification, UserActions, params} = this.props;
-        const requests = Notification && Notification.notifications ? Notification.notifications.requests : 0;
-
-        let filter = this.getFilter();
-        let skill = this.getSkill();
+        const {
+            Auth,
+            User,
+            updateConnection,
+            deleteConnection,
+            createConnection,
+            listUsers,
+            listMoreUsers,
+            filter,
+            skill,
+            requests} = this.props;
 
         return (
             <div>
@@ -53,9 +27,9 @@ export default class UserList extends React.Component {
                         <div className="clearfix">
                             <div className="pull-right">
                                 <SearchBox placeholder="Search by name or skills"
-                                           filter={{filter, skill}}
-                                           onSearch={UserActions.listUsers}
-                                           count={User.list.count}/>
+                                    filter={{ filter, skill }}
+                                    onSearch={listUsers}
+                                    count={User.list.count} />
                             </div>
                             <h2 className="pull-left">People</h2>
                         </div>
@@ -65,15 +39,15 @@ export default class UserList extends React.Component {
                                 [
                                     Auth.user.is_staff ? (
                                         <Link to="/people/filter/clients" key="clients"
-                                              activeClassName="active">Clients</Link>) : null,
+                                            activeClassName="active">Clients</Link>) : null,
                                     <Link to="/people/filter/team" activeClassName="active" key="team">
                                         {Auth.user.is_developer ? 'My friends' : 'My team'}
                                     </Link>,
                                     Auth.user.is_developer ? (
                                         <Link to="/people/filter/my-clients" key="my-clients" activeClassName="active">My Clients</Link>
                                     ) : null,
-                                    <Link to="/people/filter/requests" activeClassName="active"  key="requests"
-                                          style={{marginLeft: '20px'}}>
+                                    <Link to="/people/filter/requests" activeClassName="active" key="requests"
+                                        style={{ marginLeft: '20px' }}>
                                         Requests {requests ? <span className="badge">{requests}</span> : null}
                                     </Link>,
                                     Auth.user.is_project_owner || Auth.user.is_staff ? (
@@ -83,15 +57,15 @@ export default class UserList extends React.Component {
                                 ]
                             ) : null}
                             {skill ? (
-                                <Link to={`/people/skill/${skill}/`} className="active" style={{marginLeft: '20px'}}>
-                                    <i className="tunga-icon-tag"/> {skill}
+                                <Link to={`/people/skill/${skill}/`} className="active" style={{ marginLeft: '20px' }}>
+                                    <i className="tunga-icon-tag" /> {skill}
                                 </Link>
                             ) : null}
                         </div>
                     </div>
                 )}
                 {User.list.isFetching ?
-                    (<Progress/>)
+                    (<Progress />)
                     :
                     (<div>
                         <div className="row flex-row">
@@ -99,14 +73,17 @@ export default class UserList extends React.Component {
                                 const user = User.list.users[id];
                                 return (
                                     <div className="col-sm-6 col-md-4" key={id}>
-                                        <UserCard Auth={Auth} user={user} UserActions={UserActions}
-                                                  hideOnDisconnect={filter == 'team'}/>
+                                        <UserCard Auth={Auth} user={user}
+                                            deleteConnection={deleteConnection}
+                                            createConnection={createConnection}
+                                            updateConnection={updateConnection}
+                                            hideOnDisconnect={filter == 'team'} />
                                     </div>
                                 );
                             })}
                         </div>
-                        <LoadMore url={User.list.next} callback={UserActions.listMoreUsers}
-                                  loading={User.list.isFetchingMore}/>
+                        <LoadMore url={User.list.next} callback={listMoreUsers}
+                            loading={User.list.isFetchingMore} />
                         {User.list.ids.length ? null : (
                             <div className="alert alert-info">No users match your query</div>
                         )}

@@ -6,19 +6,19 @@ import TagList from './TagList';
 export default class UserCard extends React.Component {
 
     handleConnectRequest() {
-        const { UserActions, user } = this.props;
-        UserActions.createConnection({to_user: user.id});
+        const { createConnection, user } = this.props;
+        createConnection({to_user: user.id});
     }
 
     handleConnectResponse(accepted=false) {
-        const { UserActions, user } = this.props;
-        UserActions.updateConnection(user.request, {accepted, responded: true});
+        const { updateConnection, user } = this.props;
+        updateConnection(user.request, {accepted, responded: true});
     }
 
     handleDeleteConnection() {
-        const { UserActions, user, hideOnDisconnect } = this.props;
+        const { deleteConnection, user, hideOnDisconnect } = this.props;
         if(user.connection) {
-            UserActions.deleteConnection(user.connection.id, user, hideOnDisconnect);
+            deleteConnection(user.connection.id, user, hideOnDisconnect);
         }
     }
 

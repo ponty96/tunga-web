@@ -54,6 +54,7 @@ import Participation from 'components/Participation';
 import RateDevelopers from 'components/RateDevelopers';
 import UserPage from 'containers/UserPage';
 import UserList from 'components/UserList';
+import UserContainer from 'containers/UserContainer';
 import User from 'components/User';
 import InviteDeveloper from 'containers/InviteDeveloper';
 import MessagePage from 'containers/MessagePage';
@@ -183,8 +184,8 @@ ReactDOM.render(
 
                     <Route path="people" component={UserPage}>
                         <IndexRedirect to="filter/developers" />
-                        <Route path="filter/:filter" component={UserList} />
-                        <Route path="skill/:skill(/:filter)" component={UserList} />
+                        <Route path="filter/:filter" component={UserContainer} />
+                        <Route path="skill/:skill(/:filter)" component={UserContainer} />
                         <Route path="invite" component={InviteDeveloper} />
                         <Route path=":userId" component={User} />
                     </Route>
@@ -199,8 +200,8 @@ ReactDOM.render(
                     </Route>
                     <Route path="search" component={SearchPage}>
                         <IndexRedirect to="people"/>
-                        <Route path="people" component={UserList} />
-                        <Route path="developers" component={UserList} />
+                        <Route path="people" component={UserContainer} />
+                        <Route path="developers" component={UserContainer} />
                         <Route path="tasks" component={TaskList} authedOnly={true}/>
                         <Route path="messages" component={MessageList} authedOnly={true}/>
                         <Route path="support" component={SupportPageList} />
