@@ -135,6 +135,7 @@ export default class UserContainer extends React.Component {
             createConnection={createConnection}
             Auth={Auth}
             User={User}
+            users={this.getUsers(User)}
             filter={filter} />
           <LoadMore url={User.list.next} callback={listMoreUsers}
             loading={User.list.isFetchingMore} />
@@ -147,9 +148,10 @@ export default class UserContainer extends React.Component {
     }
   }
 
-  getUsers = (list) => {
-    if (list.count > 0 && list.count != null) {
-      return list.id.map(id => (list.users[id]))
+  getUsers = (User) => {
+    console.log(User)
+    if (User.list.count > 0) {
+      return User.list.ids.map(id => (User.list.users[id]))
     }
     return []
   }

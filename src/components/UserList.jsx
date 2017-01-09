@@ -8,7 +8,7 @@ export default class UserList extends React.Component {
 
     static propTypes = {
         Auth: PropTypes.object.isRequired,
-        User: PropTypes.object.isRequired,
+        users: PropTypes.array.isRequired,
         updateConnection: PropTypes.func.isRequired,
         deleteConnection: PropTypes.func.isRequired,
         createConnection: PropTypes.func.isRequired,
@@ -17,17 +17,16 @@ export default class UserList extends React.Component {
     render() {
         const {
             Auth,
-            User,
             updateConnection,
             deleteConnection,
             createConnection,
-            filter} = this.props;
-
+            filter,
+            users} = this.props;
+            console.log(users)
         return (
             <div>
                 <div className="row flex-row">
-                    {User.list.ids.map((id) => {
-                        const user = User.list.users[id];
+                    {users.map((user,id) => {
                         return (
                             <div className="col-sm-6 col-md-4" key={id}>
                                 <UserCard Auth={Auth} user={user}
