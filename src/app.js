@@ -3,6 +3,7 @@ import 'babel-polyfill'; // Add Promises polyfill to global environment
 //Import local css
 import 'react-widgets/lib/less/react-widgets.less';
 import "css/style.less";
+import 'react-dates/lib/css/_datepicker.css';
 
 // Local JS
 import "script!js/js.cookie.js";
@@ -78,6 +79,7 @@ import SupportSectionList from 'components/SupportSectionList';
 import SupportPageDetail from 'components/SupportPageDetail';
 import SearchPage from 'containers/SearchPage';
 import SupportPageList from 'components/SupportPageList';
+import TimesheetPage from 'containers/TimesheetPage';
 
 ReactDOM.render(
     <Provider store={store}>
@@ -86,6 +88,9 @@ ReactDOM.render(
                 <IndexRoute component={LandingPage} unauthedOnly={true}/>
                 <Route unauthedOnly={true}>
                     {/* No Auth Pages */}
+
+
+                    <Route path="timesheet" component={TimesheetPage} /> 
                     <Route path="how-it-works" component={HowItWorksPage}/>
                     <Route path="pricing" component={PricingPage}/>
                     <Route path="press" component={LandingPage}/>
@@ -140,8 +145,7 @@ ReactDOM.render(
                             <Route path="new" component={TaskForm} />
                             <Route path="filter/:filter" component={TaskList} />
                             <Route path="skill/:skill(/:filter)" component={TaskList} />
-                            <Route path=":taskId" component={Task}>
-                                <IndexRoute component={TaskWorflow} />
+                            <Route path=":taskId/" component={Task}>
                                 <Route path="edit" component={TaskForm} crumb="Edit"/>
                                 <Route path="apply" component={ApplicationForm} crumb="Apply"/>
                                 <Route path="applications" component={ApplicationList} crumb="Applications"/>
@@ -155,6 +159,7 @@ ReactDOM.render(
                                 <Route path="event" component={MilestonePage}>
                                     <Route path=":eventId" component={Milestone}/>
                                 </Route>
+                                <IndexRoute component={TaskWorflow} />
                             </Route>
                         </Route>
                         <Route path="conversation" component={MessagePage}>

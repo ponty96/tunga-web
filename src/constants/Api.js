@@ -91,6 +91,7 @@ export const ENDPOINT_COUNTRIES = getEndpointUrl('countries/');
 export const ENDPOINT_CONTACT_REQUEST = getEndpointUrl('contact-request/');
 export const ENDPOINT_SUPPORT_SECTION = getEndpointUrl('support/section/');
 export const ENDPOINT_SUPPORT_PAGE = getEndpointUrl('support/page/');
+export const ENPOINT_TIME_ENTRY = getEndpointUrl('time-entry');
 
 export const USER_TYPE_DEVELOPER = 1;
 export const USER_TYPE_PROJECT_OWNER = 2;

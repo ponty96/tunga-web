@@ -1,0 +1,199 @@
+import axios from 'axios';
+import { ENPOINT_TIME_ENTRY } from '../constants/Api';
+
+
+// ACTION TYPES FOR CREATING TIMESHEETS
+export const CREATE_TIMESHEETS_START = 'CREATE_TIMESHEETS_START';
+export const CREATE_TIMESHEETS_SUCCESS = 'CREATE_TIMESHEETS_SUCCESS';
+export const CREATE_TIMESHEETS_FAILED = 'CREATE_TIMESHEETS_FAILED';
+
+// ACTION TYPES FOR FETCHING TIMESHEETS
+export const LIST_TIMESHEETS_START = 'LIST_TIMESHEETS_START';
+export const LIST_TIMESHEETS_SUCCESS = 'LIST_TIMESHEETS_SUCCESS';
+export const LIST_TIMESHEETS_FAILED = 'LIST_TIMESHEETS_FAILED';
+
+export const UPDATE_TIMESHEETS_START = 'UPDATE_TIMESHEETS_START';
+export const UPDATE_TIMESHEETS_SUCCESS = 'UPDATE_TIMESHEETS_SUCCESS';
+export const UPDATE_TIMESHEETS_FAILED = 'UPDATE_TIMESHEETS_FAILED';
+
+export const DELETE_TIMESHEETS_START = 'DELETE_TIMESHEETS_START';
+export const DELETE_TIMESHEETS_SUCCESS = 'DELETE_TIMESHEETS_SUCCESS';
+export const DELETE_TIMESHEETS_FAILED = 'DELETE_TIMESHEETS_FAILED';
+
+
+export const LIST_MORE_TIMESHEETS_START = 'LIST_MORE_TIMESHEETS_START';
+export const LIST_MORE_TIMESHEETS_SUCCESS = 'LIST_MORE_TIMESHEETS_SUCCESS';
+export const LIST_MORE_TIMESHEETS_FAILED = 'LIST_MORE_TIMESHEETS_FAILED';
+
+
+export function createTimesheet(task_id, timesheet) {
+    return dispatch => {
+        dispatch(createTimesheetStart(timesheet));
+        axios.post(ENPOINT_TIME_ENTRY, timesheet)
+             .then(function(response) {
+                dispatch(createTimesheetSuccess(response.data))
+              }).catch(function(response) {
+                    dispatch(createTimesheetFailed(response.data))
+              });
+    }
+}
+
+export function listTimesheets(taskId) {
+    return dispatch => {
+        dispatch(listTimesheetsStart());
+        axios.get(`${ENPOINT_TIME_ENTRY}?task=${taskId}`)
+            .then(function(response) {
+                dispatch(listTimesheetsSuccess(response.data))
+            }).catch(function(response) {
+                dispatch(listTimesheetsFailed(response.data))
+            });
+    }
+}
+
+export function updateTimesheet(task_id, timesheet_id, timesheet) {
+    return dispatch => {
+        dispatch(updateTimesheetStart(id));
+        axios.patch(`${ENDPOINT_TASK}task_id/timesheet/${timesheet_id}`, timesheet)
+            .then(function(response) {
+                dispatch(updateTimesheetSuccess(response.data))
+            }).catch(function(response) {
+                dispatch(updateTimesheetFailed(response.data))
+            });
+    }
+}
+
+
+export function deleteTimesheet(id) {
+    return dispatch => {
+        dispatch(deleteTimesheetStart(id));
+        axios.delete(ENDPOINT_COMMENT + id + '/', {})
+            .then(function() {
+                dispatch(deleteTimesheetSuccess(id))
+            }).catch(function(response) {
+                dispatch(deleteTimesheetFailed(response.data))
+            });
+    }
+}
+
+
+export function createTimesheetStart(timesheet) {
+    return {
+        type: CREATE_TIMESHEETS_START,
+        timesheet
+    }
+}
+
+export function createTimesheetSuccess(timesheet) {
+    return {
+        type: CREATE_TIMESHEETS_SUCCESS,
+        timesheet
+    }
+}
+
+export function createTimesheetFailed(error) {
+    return {
+        type: CREATE_TIMESHEETS_FAILED,
+        error
+    }
+}
+
+export function listTimesheetsStart(filter) {
+    return {
+        type: LIST_TIMESHEETS_START
+    }
+}
+
+export function listTimesheetsSuccess(response) {
+    return {
+        type: LIST_TIMESHEETS_SUCCESS,
+        items: response.results,
+        previous: response.previous,
+        next: response.next,
+        count: response.count
+    }
+}
+
+export function listTimesheetsFailed(error) {
+    return {
+        type: LIST_TIMESHEETS_FAILED,
+        error
+    }
+}
+
+export function updateTimesheetStart(id) {
+    return {
+        type: UPDATE_COMMENT_START,
+        id
+    }
+}
+
+export function listMoreTimesheets(url) {
+    return dispatch => {
+        dispatch(listMoreTimesheetsStart(url));
+        axios.get(url)
+            .then(function(response) {
+                dispatch(listMoreTimesheetsSuccess(response.data))
+            }).catch(function(response) {
+                dispatch(listMoreTimesheetsFailed(response.data))
+            });
+    }
+}
+
+export function listMoreTimesheetsStart(url) {
+    return {
+        type: LIST_MORE_TIMESHEETS_START,
+        url
+    }
+}
+
+export function listMoreTimesheetsSuccess(response) {
+    return {
+        type: LIST_MORE_TIMESHEETS_SUCCESS,
+        items: response.results,
+        previous: response.previous,
+        next: response.next,
+        count: response.count
+    }
+}
+
+export function listMoreTimesheetsFailed(error) {
+    return {
+        type: LIST_MORE_TIMESHEETS_FAILED,
+        error
+    }
+}
+
+export function updateTimesheetSuccess(timesheet) {
+    return {
+        type: UPDATE_COMMENT_SUCCESS,
+        timesheet
+    }
+}
+
+export function updateTimesheetFailed(error) {
+    return {
+        type: UPDATE_COMMENT_FAILED,
+        error
+    }
+}
+
+export function deleteTimesheetStart(id) {
+    return {
+        type: DELETE_COMMENT_START,
+        id
+    }
+}
+
+export function deleteTimesheetSuccess(id) {
+    return {
+        type: DELETE_COMMENT_SUCCESS,
+        id
+    }
+}
+
+export function deleteTimesheetFailed(error) {
+    return {
+        type: DELETE_COMMENT_FAILED,
+        error
+    }
+}

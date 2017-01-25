@@ -18,7 +18,7 @@ import Utility from './UtilityReducers';
 import Search from './SearchReducers';
 import SupportSection from './SupportSectionReducers';
 import SupportPage from './SupportPageReducers';
-
+import Timesheet from './TimesheetReducers';
 
 const Support = combineReducers({
     Section: SupportSection,
@@ -43,6 +43,7 @@ const TungaApp = combineReducers({
     Utility,
     Search,
     Support,
+    Timesheet,
     routing: routerReducer
 });
 
