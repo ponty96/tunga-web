@@ -88,8 +88,6 @@ ReactDOM.render(
                 <IndexRoute component={LandingPage} unauthedOnly={true}/>
                 <Route unauthedOnly={true}>
                     {/* No Auth Pages */}
-
-
                     <Route path="timesheet" component={TimesheetPage} /> 
                     <Route path="how-it-works" component={HowItWorksPage}/>
                     <Route path="pricing" component={PricingPage}/>
