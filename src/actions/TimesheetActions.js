@@ -26,10 +26,10 @@ export const LIST_MORE_TIMESHEETS_SUCCESS = 'LIST_MORE_TIMESHEETS_SUCCESS';
 export const LIST_MORE_TIMESHEETS_FAILED = 'LIST_MORE_TIMESHEETS_FAILED';
 
 
-export function createTimesheet(task_id, timesheet) {
+export function createTimesheet(timesheet) {
     return dispatch => {
         dispatch(createTimesheetStart(timesheet));
-        axios.post(ENPOINT_TIME_ENTRY, timesheet)
+        axios.post(`${ENPOINT_TIME_ENTRY}/`, timesheet)
              .then(function(response) {
                 dispatch(createTimesheetSuccess(response.data))
               }).catch(function(response) {

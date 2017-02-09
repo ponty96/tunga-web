@@ -16,7 +16,7 @@ class TimesheetPage extends React.Component {
     }
 
     componentDidMount() {
-        const taskId = 12 // GET TASK ID FROM PARAMS
+        const {params: {taskId}} = this.props
         this.props.TimesheetActions.listTimesheets(taskId)
     }
 
@@ -29,9 +29,9 @@ class TimesheetPage extends React.Component {
     }
 
     submitForm = (form) => {
-        const task_id = 2; // get task id
-        const { TimesheetActions } = this.props
-        TimesheetActions.createTimesheet(task_id, form)
+        const { TimesheetActions, params: {taskId} } = this.props
+        form['task'] = taskId
+        TimesheetActions.createTimesheet(form)
     }
 }
 
