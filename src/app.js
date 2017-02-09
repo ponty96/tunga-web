@@ -3,7 +3,6 @@ import 'babel-polyfill'; // Add Promises polyfill to global environment
 //Import local css
 import 'react-widgets/lib/less/react-widgets.less';
 import "css/style.less";
-import 'react-dates/lib/css/_datepicker.css';
 
 // Local JS
 import "script!js/js.cookie.js";
@@ -88,7 +87,6 @@ ReactDOM.render(
                 <IndexRoute component={LandingPage} unauthedOnly={true}/>
                 <Route unauthedOnly={true}>
                     {/* No Auth Pages */}
-                    <Route path="timesheet" component={TimesheetPage} /> 
                     <Route path="how-it-works" component={HowItWorksPage}/>
                     <Route path="pricing" component={PricingPage}/>
                     <Route path="press" component={LandingPage}/>
@@ -157,6 +155,10 @@ ReactDOM.render(
                                 <Route path="event" component={MilestonePage}>
                                     <Route path=":eventId" component={Milestone}/>
                                 </Route>
+                                <Route path="timesheet" component={TimesheetPage} crumb="Timesheets">
+                                     <Route path="new" crumb="Add time entry"/>
+                                     <Route path=":timesheetId" crumb="Edit time entry"/>
+                                 </Route>
                                 <IndexRoute component={TaskWorflow} />
                             </Route>
                         </Route>

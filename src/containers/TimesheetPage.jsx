@@ -1,5 +1,4 @@
 import React from 'react';
-import { SingleDatePicker } from 'react-dates';
 import TimesheetForm from './../components/TimesheetForm'
 import TimesheetList from './../components/TimesheetList'
 import connect from '../utils/connectors/TimesheetConnector';
@@ -22,9 +21,11 @@ class TimesheetPage extends React.Component {
     }
 
     getTotalHours = () => {
-        return Timesheet.list.timesheets.reduce((accumulator,currentVal) => {
-            return accumulator + currentVal.hours
-        })
+        const {Timesheet} = this.props
+        // return Timesheet.list.timesheets.reduce((accumulator,currentVal) => {
+        //     return accumulator + currentVal.hours
+        // })
+        return 0
     }
 
     submitForm = (form) => {
