@@ -1,32 +1,47 @@
 import React, { PropTypes } from 'react';
 export default class TimesheetList extends React.Component {
-    static propTypes = {
-        timesheets: PropTypes.array.isRequired
-    }
-    render() {
-        return (
-            <div>
-               {this.renderList()}
-            </div>
-        )
-    }
+  static propTypes = {
+    timesheets: PropTypes.array.isRequired
+  }
+  render() {
+    return (
+      <div>
+        <div className="container">
+          <h4>Timesheets - Total Hours({this.props.count})</h4>
+          <table className="table table-striped" style={{width: "80%"}}>
+            <thead>
+              <tr>
+                <th>Spent at</th>
+                <th>Hours</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderBody()}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
 
-    renderList = () => {
-        const {timesheets} = this.props
-        return timesheets.map((content, index) => (
-                <div className="timesheet-box" key={index}>
-                    <div className="inline-flex">
-                        <h5>Spent at: </h5> <h5>{content.spent_at}</h5>
-                    </div>
-                    <div className="inline-flex">
-                        <h5>Hours:</h5> <h5> {content.hours} hours</h5>
-                    </div>
-                    <div className="timesheet desc">
-                        <h5>Description</h5>
-                        <p>{content.description}</p>
-                    </div>
-                </div>
-            ))
-    }
+  renderBody = () => {
+    const {timesheets} = this.props
+    return timesheets.map((content, index) => (
+      <tr key={index}>
+        <td>{content.spent_at}</td>
+        <td>{content.hours} hours</td>
+        <td>{content.description}</td>
+        <td>
+          <i className="fa fa-edit" onClick={() => this._openEditForm(content.id)}></i>
+        </td>
+      </tr>
+    ))
+  }
+
+  _openEditForm(id){
+    this.props.openEditForm(id)
+  }
 }
 

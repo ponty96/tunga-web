@@ -12,14 +12,9 @@ export const LIST_TIMESHEETS_START = 'LIST_TIMESHEETS_START';
 export const LIST_TIMESHEETS_SUCCESS = 'LIST_TIMESHEETS_SUCCESS';
 export const LIST_TIMESHEETS_FAILED = 'LIST_TIMESHEETS_FAILED';
 
-export const UPDATE_TIMESHEETS_START = 'UPDATE_TIMESHEETS_START';
-export const UPDATE_TIMESHEETS_SUCCESS = 'UPDATE_TIMESHEETS_SUCCESS';
-export const UPDATE_TIMESHEETS_FAILED = 'UPDATE_TIMESHEETS_FAILED';
-
-export const DELETE_TIMESHEETS_START = 'DELETE_TIMESHEETS_START';
-export const DELETE_TIMESHEETS_SUCCESS = 'DELETE_TIMESHEETS_SUCCESS';
-export const DELETE_TIMESHEETS_FAILED = 'DELETE_TIMESHEETS_FAILED';
-
+export const UPDATE_TIMESHEET_START = 'UPDATE_TIMESHEET_START';
+export const UPDATE_TIMESHEET_SUCCESS = 'UPDATE_TIMESHEET_SUCCESS';
+export const UPDATE_TIMESHEET_FAILED = 'UPDATE_TIMESHEET_FAILED';
 
 export const LIST_MORE_TIMESHEETS_START = 'LIST_MORE_TIMESHEETS_START';
 export const LIST_MORE_TIMESHEETS_SUCCESS = 'LIST_MORE_TIMESHEETS_SUCCESS';
@@ -50,10 +45,10 @@ export function listTimesheets(taskId) {
     }
 }
 
-export function updateTimesheet(task_id, timesheet_id, timesheet) {
+export function updateTimesheet(timesheet_id, timesheet) {
     return dispatch => {
-        dispatch(updateTimesheetStart(id));
-        axios.patch(`${ENDPOINT_TASK}task_id/timesheet/${timesheet_id}`, timesheet)
+        dispatch(updateTimesheetStart(timesheet_id));
+        axios.patch(`${ENPOINT_TIME_ENTRY}/${timesheet_id}/`, timesheet)
             .then(function(response) {
                 dispatch(updateTimesheetSuccess(response.data))
             }).catch(function(response) {
@@ -61,20 +56,6 @@ export function updateTimesheet(task_id, timesheet_id, timesheet) {
             });
     }
 }
-
-
-export function deleteTimesheet(id) {
-    return dispatch => {
-        dispatch(deleteTimesheetStart(id));
-        axios.delete(ENDPOINT_COMMENT + id + '/', {})
-            .then(function() {
-                dispatch(deleteTimesheetSuccess(id))
-            }).catch(function(response) {
-                dispatch(deleteTimesheetFailed(response.data))
-            });
-    }
-}
-
 
 export function createTimesheetStart(timesheet) {
     return {
@@ -122,7 +103,7 @@ export function listTimesheetsFailed(error) {
 
 export function updateTimesheetStart(id) {
     return {
-        type: UPDATE_COMMENT_START,
+        type: UPDATE_TIMESHEET_START,
         id
     }
 }
@@ -165,35 +146,15 @@ export function listMoreTimesheetsFailed(error) {
 
 export function updateTimesheetSuccess(timesheet) {
     return {
-        type: UPDATE_COMMENT_SUCCESS,
+        type: UPDATE_TIMESHEET_SUCCESS,
         timesheet
     }
 }
 
 export function updateTimesheetFailed(error) {
     return {
-        type: UPDATE_COMMENT_FAILED,
+        type: UPDATE_TIMESHEET_FAILED,
         error
     }
 }
 
-export function deleteTimesheetStart(id) {
-    return {
-        type: DELETE_COMMENT_START,
-        id
-    }
-}
-
-export function deleteTimesheetSuccess(id) {
-    return {
-        type: DELETE_COMMENT_SUCCESS,
-        id
-    }
-}
-
-export function deleteTimesheetFailed(error) {
-    return {
-        type: DELETE_COMMENT_FAILED,
-        error
-    }
-}

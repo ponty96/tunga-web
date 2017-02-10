@@ -103,19 +103,6 @@ function isFetchingMore(state = false, action) {
     }
 }
 
-
-function isDeleting(state = false, action) {
-    switch (action.type) {
-        case TimesheetActions.DELETE_TIMESHEET_START:
-            return true;
-        case TimesheetActions.DELETE_TIMESHEET_SUCCESS:
-        case TimesheetActions.DELETE_TIMESHEET_FAILED:
-            return false;
-        default:
-            return state;
-    }
-}
-
 function error(state = {}, action) {
     switch (action.type) {
         case TimesheetActions.CREATE_TIMESHEET_FAILED:
@@ -132,7 +119,6 @@ const timesheet = combineReducers({
     singleTimesheet,
     isSaving,
     isSaved,
-    isDeleting,
     error
 });
 
