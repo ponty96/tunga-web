@@ -1,14 +1,14 @@
 import React from "react";
-import { connect } from "react-redux";
-import * as MultiTasksPaymentActions from "../actions/MultiTasksPaymentActions";
 
-class MultiTaskCheckItem extends React.Component {
+export default class MultiTaskCheckItem extends React.Component {
   static propTypes = {
     task: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired,
-      fee: React.PropTypes.string.isRequired
+      fee: React.PropTypes.number.isRequired
     }),
-    selectedTasks: React.PropTypes.array.isRequired
+    selectedTasks: React.PropTypes.array.isRequired,
+    removeTaskFromMultiTasksPayment: React.PropTypes.func.isRequired,
+    addTaskToMultiTasksPayment: React.PropTypes.func.isRequired
   };
   render() {
     console.log(this.props.selectedTasks);
@@ -34,13 +34,10 @@ class MultiTaskCheckItem extends React.Component {
   handleChange = () => {
     const { task, dispatch } = this.props;
     if (this.isChecked()) {
-      dispatch(MultiTasksPaymentActions.removeTaskFromMultiTaskPayment(task));
+      this.props.removeTaskFromMultiTasksPayment(task);
     } else {
-      dispatch(MultiTasksPaymentActions.addTaskToMultiTaskPayment(task));
+      this.props.addTaskToMultiTasksPayment(task);
     }
   };
 }
 
-export default connect(state => ({
-  selectedTasks: state.MultiTasksPayment.tasks
-}))(MultiTaskCheckItem);
