@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as MultiTaskPaymentActions from "../actions/MultiTaskPaymentActions";
+import * as MultiTasksPaymentActions from "../actions/MultiTasksPaymentActions";
 
 class MultiTaskCheckItem extends React.Component {
   static propTypes = {
@@ -34,9 +34,9 @@ class MultiTaskCheckItem extends React.Component {
   handleChange = () => {
     const { task, dispatch } = this.props;
     if (this.isChecked()) {
-      dispatch(MultiTaskPaymentActions.removeTaskFromMultiTaskPayment(task));
+      dispatch(MultiTasksPaymentActions.removeTaskFromMultiTaskPayment(task));
     } else {
-      dispatch(MultiTaskPaymentActions.addTaskToMultiTaskPayment(task));
+      dispatch(MultiTasksPaymentActions.addTaskToMultiTaskPayment(task));
     }
   };
 }
