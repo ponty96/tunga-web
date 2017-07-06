@@ -11,7 +11,6 @@ export default class MultiTaskCheckItem extends React.Component {
     addTaskToMultiTasksPayment: React.PropTypes.func.isRequired
   };
   render() {
-    console.log(this.props.selectedTasks);
     return (
       <input
         type="checkbox"
@@ -25,7 +24,6 @@ export default class MultiTaskCheckItem extends React.Component {
   isChecked = () => {
     const { task, selectedTasks } = this.props;
     const selectedTask = selectedTasks.find(content => content.id === task.id);
-    console.log(selectedTask, "selectedTask")
     if (typeof selectedTask == "object" && selectedTask != null) {
       return true;
     } else return false;
