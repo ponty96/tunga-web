@@ -4,7 +4,7 @@ import _ from "lodash";
 const initialState = {
   isFetching: false,
   tasks: [],
-  data: {}
+  data: null
 };
 
 const onTaskRemove = (state, { task }) => {

@@ -15,6 +15,19 @@ import { isAdmin, isDeveloper, isProjectManager } from "../utils/auth";
 import * as MultiTasksPaymentActions from "../actions/MultiTasksPaymentActions";
 
 export default class PaymentList extends GenericListContainer {
+  componentWillReceiveProps(nextProps) {
+    const {
+      MultiTasksPayment: { tasks, isFetching, data }
+    } = nextProps;
+    if(data != null){
+      /**
+       * redirect here
+       */
+      console.log("********")
+      console.log("redirect to payment page here")
+      console.log("*******")
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
     super.componentDidUpdate(prevProps, prevState);
 
@@ -50,7 +63,6 @@ export default class PaymentList extends GenericListContainer {
       MultiTasksPaymentActions,
       MultiTasksPayment
     } = this.props;
-    console.log(MultiTasksPayment)
 
     const all_tasks = Task.list.ids[this.state.selection_key] || [];
 
@@ -133,7 +145,6 @@ export default class PaymentList extends GenericListContainer {
                                   removeTaskFromMultiTasksPayment={
                                     MultiTasksPaymentActions.removeTaskFromMultiTaskPayment
                                   }
-
                                 />}
                             </td>
                             <td>
@@ -242,7 +253,7 @@ export default class PaymentList extends GenericListContainer {
   createMultiTasksPayment = () => {
     const {
       MultiTasksPaymentActions,
-      MultiTasksPayment: {tasks, isFetching}
+      MultiTasksPayment: { tasks, isFetching }
     } = this.props;
 
     if (!isFetching) {
@@ -253,7 +264,7 @@ export default class PaymentList extends GenericListContainer {
       MultiTasksPaymentActions.createMultiTasksPayment({
         fee: totalFee,
         tasks: tasks
-      })
+      });
     }
   };
 }
