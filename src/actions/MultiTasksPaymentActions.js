@@ -23,16 +23,16 @@ export function removeTaskFromMultiTaskPayment(task) {
   };
 }
 
-export function createMultiTaskPaymentStart() {
+export function createMultiTasksPaymentStart() {
   return {
     type: CREATE_MULTI_TASK_PAYMENT
   };
 }
 
-export function createMultiTaskPaymentSuccess(response) {
+export function createMultiTasksPaymentSuccess(response) {
   return {
     type: CREATE_MULTI_TASK_PAYMENT_SUCCESS,
-    payload: response
+    multiTask: response
   };
 }
 
@@ -45,10 +45,10 @@ export function createMultiTaskPaymentSuccess(response) {
 
 
  */
-export function createMultiTaskPayment(formData) {
+export function createMultiTasksPayment(formData) {
   const responseData = {
     id: 1,
-    fee: 300,
+    fee: formData.fee,
     tasks: [1, 3, 4],
     btc_address: "1Fo18Egq1vybW9D9rhsXsEMoPYDqNTcGam",
     payment_method: null,
@@ -59,9 +59,9 @@ export function createMultiTaskPayment(formData) {
     updated_at: "2017-06-19T18:50:36.320172"
   };
   return dispatch => {
-    dispatch(createMultiTaskPaymentStart());
+    dispatch(createMultiTasksPaymentStart());
     setTimeout(() => {
-      dispatch(createMultiTaskPaymentSuccess(responseData));
+      dispatch(createMultiTasksPaymentSuccess(responseData));
     }, 3000);
   };
 }
