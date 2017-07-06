@@ -8,7 +8,9 @@ class TaskContainer extends React.Component {
             return React.cloneElement(child, {
                 Task: this.props.Task,
                 Application: this.props.Application,
-                TaskActions: this.props.TaskActions
+                TaskActions: this.props.TaskActions,
+                MultiTasksPaymentActions: this.props.MultiTasksPaymentActions,
+                MultiTasksPayment: this.props.MultiTasksPayment
             });
         }.bind(this));
     }
