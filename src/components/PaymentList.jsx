@@ -14,18 +14,22 @@ import { isAdmin, isDeveloper, isProjectManager } from "../utils/auth";
 
 import * as MultiTasksPaymentActions from "../actions/MultiTasksPaymentActions";
 
+const totalFeeStyle = {
+  marginRight: "5px",
+  marginTop: "10px",
+  color: "#EE1F54",
+  fontSize: "14px"
+}
 export default class PaymentList extends GenericListContainer {
   componentWillReceiveProps(nextProps) {
-    const {
-      MultiTasksPayment: { tasks, isFetching, data }
-    } = nextProps;
-    if(data != null){
+    const { MultiTasksPayment: { tasks, isFetching, data } } = nextProps;
+    if (data != null) {
       /**
        * redirect here
        */
-      console.log("********")
-      console.log("redirect to payment page here")
-      console.log("*******")
+      console.log("********");
+      console.log("redirect to payment page here");
+      console.log("*******");
     }
   }
   componentDidUpdate(prevProps, prevState) {
@@ -92,12 +96,16 @@ export default class PaymentList extends GenericListContainer {
             </Link>
           </li>
         </ul>
-        {(isAdmin() || isProjectManager()) && this.canPaySelectedTasks() &&
-          <ul className="nav nav-pills nav-top-filter navbar-right">
-            <li role="presentation">
-              <a onClick={this.createMultiTasksPayment}>Pay Selected Tasks</a>
-            </li>
-          </ul>}
+        {(isAdmin() || isProjectManager()) &&
+          this.canPaySelectedTasks() &&
+            <ul className="nav nav-pills nav-top-filter navbar-right">
+              <li style={totalFeeStyle}>
+                Total Fee: {this.getTotalFee(MultiTasksPayment.tasks)}
+              </li>
+              <li role="presentation">
+                <a onClick={this.createMultiTasksPayment}>Pay Selected Tasks</a>
+              </li>
+            </ul>}
         {Task.list.isFetching
           ? <Progress />
           : <div>
@@ -250,6 +258,11 @@ export default class PaymentList extends GenericListContainer {
     );
   }
 
+  getTotalFee(tasks) {
+    return tasks.reduce((sum, task) => {
+      return sum + task.fee;
+    }, 0);
+  }
   createMultiTasksPayment = () => {
     const {
       MultiTasksPaymentActions,
@@ -257,10 +270,8 @@ export default class PaymentList extends GenericListContainer {
     } = this.props;
 
     if (!isFetching) {
-      const totalFee = tasks.reduce((sum, task) => {
-        return sum + task.fee;
-      }, 0);
-
+      const totalFee = this.getTotalFee(tasks);
+      console.log(totalFee);
       MultiTasksPaymentActions.createMultiTasksPayment({
         fee: totalFee,
         tasks: tasks.map(content => content.id)
@@ -269,12 +280,10 @@ export default class PaymentList extends GenericListContainer {
   };
 
   canPaySelectedTasks = () => {
-    const {
-      MultiTasksPayment: { tasks, isFetching }
-    } = this.props;
-    if(tasks.length > 0){
+    const { MultiTasksPayment: { tasks, isFetching } } = this.props;
+    if (tasks.length > 0) {
       return true;
     }
-    return false
-  }
+    return false;
+  };
 }
