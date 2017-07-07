@@ -263,7 +263,7 @@ export default class PaymentList extends GenericListContainer {
 
       MultiTasksPaymentActions.createMultiTasksPayment({
         fee: totalFee,
-        tasks: tasks
+        tasks: tasks.map(content => content.id)
       });
     }
   };
