@@ -92,7 +92,7 @@ export default class PaymentList extends GenericListContainer {
             </Link>
           </li>
         </ul>
-        {(isAdmin() || isProjectManager()) &&
+        {(isAdmin() || isProjectManager()) && this.canPaySelectedTasks() &&
           <ul className="nav nav-pills nav-top-filter navbar-right">
             <li role="presentation">
               <a onClick={this.createMultiTasksPayment}>Pay Selected Tasks</a>
@@ -267,4 +267,14 @@ export default class PaymentList extends GenericListContainer {
       });
     }
   };
+
+  canPaySelectedTasks = () => {
+    const {
+      MultiTasksPayment: { tasks, isFetching }
+    } = this.props;
+    if(tasks.length > 0){
+      return true;
+    }
+    return false
+  }
 }
