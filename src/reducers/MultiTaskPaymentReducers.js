@@ -19,9 +19,9 @@ export default function(state = initialState, action) {
     case MultiTasksPaymentActions.REMOVE_FROM_MULTI_TASK_PAYMENT:
       return onTaskRemove(state, action);
     case MultiTasksPaymentActions.CREATE_MULTI_TASK_PAYMENT:
-      return {...state, isFetching: true}
+      return { ...state, isFetching: true };
     case MultiTasksPaymentActions.CREATE_MULTI_TASK_PAYMENT_SUCCESS:
-      return {...state, data: action.multiTask, isFetching: false}
+      return { ...state, data: action.multiTask, isFetching: false };
     default:
       return state;
   }

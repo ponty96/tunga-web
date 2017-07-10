@@ -1,85 +1,118 @@
-import React from 'react';
-import Dropzone from 'react-dropzone';
-import Progress from './status/Progress';
-import FormStatus from './status/FormStatus';
+import React from "react";
+import Dropzone from "react-dropzone";
+import Progress from "./status/Progress";
+import FormStatus from "./status/FormStatus";
 
 export default class ProfilePicture extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {photo: null};
-        this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = { photo: null };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.ProfileActions.retrieveProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.Profile.isSaved.profile &&
+      !prevProps.Profile.isSaved.profile
+    ) {
+      this.setState({ photo: null });
     }
+  }
 
-    componentDidMount() {
-        this.props.ProfileActions.retrieveProfile();
-    }
+  onDrop(files) {
+    this.setState({ photo: files[0] });
+  }
 
-    componentDidUpdate(prevProps, prevState) {
-        if(this.props.Profile.isSaved.profile && !prevProps.Profile.isSaved.profile) {
-            this.setState({photo: null});
-        }
-    }
+  onClickOpen() {
+    this.refs.dropzone.open();
+  }
 
-    onDrop(files) {
-        this.setState({photo: files[0]});
-    }
+  handleSubmit(e) {
+    e.preventDefault();
 
-    onClickOpen() {
-        this.refs.dropzone.open();
-    }
+    const id_document = this.state.photo;
+    const { Profile, ProfileActions } = this.props;
 
-    handleSubmit(e) {
-        e.preventDefault();
+    ProfileActions.updateProfile(Profile.profile.id, { id_document });
+    return;
+  }
 
-        const id_document = this.state.photo;
-        const { Profile, ProfileActions } = this.props;
+  render() {
+    const { Profile } = this.props;
+    let id_doc = this.state.photo
+      ? this.state.photo.preview
+      : Profile.profile.id_document;
 
-        ProfileActions.updateProfile(Profile.profile.id, {id_document});
-        return;
-    }
+    return (
+      <div>
+        {Profile.isRetrieving
+          ? <Progress />
+          : <form
+              onSubmit={this.handleSubmit}
+              name="profile"
+              role="form"
+              ref="profile_form"
+            >
+              <FormStatus
+                loading={Profile.isSaving.profile}
+                success={Profile.isSaved.profile}
+                message={"ID document saved"}
+                error={Profile.error.profile}
+              />
 
-    render() {
-        const { Profile } = this.props;
-        let id_doc = this.state.photo?this.state.photo.preview:Profile.profile.id_document;
+              <label>
+                Upload a scan of your National ID, Passport or Driver's license
+                *
+              </label>
 
-        return (
-            <div>
-                {Profile.isRetrieving?(
-                <Progress/>
-                    ):(
-                <form onSubmit={this.handleSubmit} name="profile" role="form" ref="profile_form">
-                    <FormStatus loading={Profile.isSaving.profile}
-                                success={Profile.isSaved.profile}
-                                message={'ID document saved'}
-                                error={Profile.error.profile}/>
+              <p className="alert alert-info">
+                This must be a PNG or JPG/JPEG file not exceeding 5MB
+              </p>
 
-                    <label>Upload a scan of your National ID, Passport or Driver's license *</label>
+              <Dropzone
+                ref="dropzone"
+                className="dropzone"
+                multiple={false}
+                accept={"image/*"}
+                onDrop={this.onDrop.bind(this)}
+              >
+                <div className="msg">
+                  {id_doc
+                    ? <div>
+                        <img
+                          src={id_doc}
+                          style={{ maxWidth: "100%", maxHeight: "300px" }}
+                        />
+                        {this.state.photo
+                          ? <p>
+                              {this.state.photo.name}
+                            </p>
+                          : null}
+                      </div>
+                    : <i
+                        className="fa fa-cloud-upload fa-2x"
+                        style={{ marginTop: "30px" }}
+                      />}
+                  <div>
+                    Drop an image here or click to select an image to upload.
+                  </div>
+                </div>
+              </Dropzone>
 
-                    <p className="alert alert-info">This must be a PNG or JPG/JPEG file not exceeding 5MB</p>
-
-                    <Dropzone ref="dropzone" className="dropzone" multiple={false} accept={'image/*'}
-                              onDrop={this.onDrop.bind(this)}>
-                        <div className="msg">
-                            {id_doc?(
-                            <div>
-                                <img src={id_doc} style={{maxWidth: '100%', maxHeight: '300px'}}/>
-                                {this.state.photo?(
-                                    <p>{this.state.photo.name}</p>
-                                ):null}
-                            </div>
-                                ):(
-                            <i className="fa fa-cloud-upload fa-2x" style={{marginTop: '30px'}}/>
-                            )}
-                            <div>Drop an image here or click to select an image to upload.</div>
-                        </div>
-                    </Dropzone>
-
-                    <button type="submit" className="btn pull-right" disabled={Profile.isSaving.profile || !this.state.photo}>Upload</button>
-                    <div className="clearfix"></div>
-                </form>
-                    )}
-            </div>
-
-        );
-    }
+              <button
+                type="submit"
+                className="btn pull-right"
+                disabled={Profile.isSaving.profile || !this.state.photo}
+              >
+                Upload
+              </button>
+              <div className="clearfix" />
+            </form>}
+      </div>
+    );
+  }
 }

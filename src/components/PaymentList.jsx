@@ -16,16 +16,14 @@ import * as MultiTasksPaymentActions from "../actions/MultiTasksPaymentActions";
 
 export default class PaymentList extends GenericListContainer {
   componentWillReceiveProps(nextProps) {
-    const {
-      MultiTasksPayment: { tasks, isFetching, data }
-    } = nextProps;
-    if(data != null){
+    const { MultiTasksPayment: { tasks, isFetching, data } } = nextProps;
+    if (data != null) {
       /**
        * redirect here
        */
-      console.log("********")
-      console.log("redirect to payment page here")
-      console.log("*******")
+      console.log("********");
+      console.log("redirect to payment page here");
+      console.log("*******");
     }
   }
   componentDidUpdate(prevProps, prevState) {

@@ -1,20 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import TaskForm from './TaskForm';
+import TaskForm from "./TaskForm";
 
 export default class ProjectTaskForm extends React.Component {
-
-    render() {
-        const { task } = this.props;
-        var new_props = {...this.props};
-        new_props.task = null;
-        return (
-            <TaskForm
-                project={task} {...new_props} />
-        );
-    }
+  render() {
+    const { task } = this.props;
+    var new_props = { ...this.props };
+    new_props.task = null;
+    return <TaskForm project={task} {...new_props} />;
+  }
 }
 
 ProjectTaskForm.propTypes = {
-    task: React.PropTypes.object.isRequired
+  task: React.PropTypes.object.isRequired
 };

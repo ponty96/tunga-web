@@ -1,87 +1,110 @@
-import React from 'react';
-import Dropzone from 'react-dropzone';
-import Progress from './status/Progress';
-import FormStatus from './status/FormStatus';
-import Avatar from './Avatar';
+import React from "react";
+import Dropzone from "react-dropzone";
+import Progress from "./status/Progress";
+import FormStatus from "./status/FormStatus";
+import Avatar from "./Avatar";
 
-import {getUser} from '../utils/auth';
+import { getUser } from "../utils/auth";
 
 export default class ProfilePicture extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {photo: null};
-        this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = { photo: null };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.ProfileActions.retrieveProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.Profile.isSaved.user && !prevProps.Profile.isSaved.user) {
+      this.setState({ photo: null });
     }
+  }
 
-    componentDidMount() {
-        this.props.ProfileActions.retrieveProfile();
-    }
+  onDrop(files) {
+    this.setState({ photo: files[0] });
+  }
 
-    componentDidUpdate(prevProps, prevState) {
-        if(this.props.Profile.isSaved.user && !prevProps.Profile.isSaved.user) {
-            this.setState({photo: null});
-        }
-    }
+  onClickOpen() {
+    this.refs.dropzone.open();
+  }
 
-    onDrop(files) {
-        this.setState({photo: files[0]});
-    }
+  handleSubmit(e) {
+    e.preventDefault();
 
-    onClickOpen() {
-        this.refs.dropzone.open();
-    }
+    const image = this.state.photo;
+    const { ProfileActions } = this.props;
 
-    handleSubmit(e) {
-        e.preventDefault();
+    ProfileActions.updateAuthUser({ image });
+    return;
+  }
 
-        const image = this.state.photo;
-        const { ProfileActions } = this.props;
+  render() {
+    const { Profile } = this.props;
+    let prof_pic = this.state.photo
+      ? this.state.photo.preview
+      : getUser().avatar_url;
 
-        ProfileActions.updateAuthUser({image});
-        return;
-    }
+    return (
+      <div>
+        {Profile.isRetrieving
+          ? <Progress />
+          : <form
+              onSubmit={this.handleSubmit}
+              name="profile"
+              role="form"
+              ref="profile_form"
+            >
+              <FormStatus
+                loading={Profile.isSaving.user}
+                success={Profile.isSaved.user}
+                message={"Profile picture saved"}
+                error={Profile.error.user}
+              />
 
-    render() {
-        const { Profile } = this.props;
-        let prof_pic = this.state.photo?this.state.photo.preview:getUser().avatar_url;
+              {Profile.error.user
+                ? <FieldError message="Uploaded file should be an image (png, jpg, jpeg or gif) and must be less than 2MB" />
+                : null}
 
-        return (
-            <div>
-                {Profile.isRetrieving?(
-                <Progress/>
-                    ):(
-                <form onSubmit={this.handleSubmit} name="profile" role="form" ref="profile_form">
-                    <FormStatus loading={Profile.isSaving.user}
-                                success={Profile.isSaved.user}
-                                message={'Profile picture saved'}
-                                error={Profile.error.user}/>
+              <Dropzone
+                ref="dropzone"
+                className="dropzone"
+                multiple={false}
+                accept={"image/*"}
+                onDrop={this.onDrop.bind(this)}
+              >
+                <div className="msg">
+                  {prof_pic
+                    ? <div>
+                        <Avatar src={prof_pic} size="xxl" />
+                        {this.state.photo
+                          ? <p>
+                              {this.state.photo.name}
+                            </p>
+                          : null}
+                      </div>
+                    : <i
+                        className="fa fa-cloud-upload fa-2x"
+                        style={{ marginTop: "30px" }}
+                      />}
+                  <div>
+                    Drop an image here or click to select an image to upload.
+                  </div>
+                </div>
+              </Dropzone>
 
-                    {Profile.error.user?(
-                        <FieldError message="Uploaded file should be an image (png, jpg, jpeg or gif) and must be less than 2MB"/>
-                    ):null}
-
-                    <Dropzone ref="dropzone" className="dropzone" multiple={false} accept={'image/*'}
-                              onDrop={this.onDrop.bind(this)}>
-                        <div className="msg">
-                            {prof_pic?(
-                            <div>
-                                <Avatar src={prof_pic} size="xxl"/>
-                                {this.state.photo?(
-                                    <p>{this.state.photo.name}</p>
-                                ):null}
-                            </div>
-                                ):(
-                            <i className="fa fa-cloud-upload fa-2x" style={{marginTop: '30px'}}/>)}
-                            <div>Drop an image here or click to select an image to upload.</div>
-                        </div>
-                    </Dropzone>
-
-                    <button type="submit" className="btn  pull-right" disabled={Profile.isSaving.user || !this.state.photo}>Upload</button>
-                    <div className="clearfix"></div>
-                </form>
-                    )}
-            </div>
-
-        );
-    }
+              <button
+                type="submit"
+                className="btn  pull-right"
+                disabled={Profile.isSaving.user || !this.state.photo}
+              >
+                Upload
+              </button>
+              <div className="clearfix" />
+            </form>}
+      </div>
+    );
+  }
 }

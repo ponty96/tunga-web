@@ -38,11 +38,14 @@ function mapDispatchToProps(dispatch) {
       ...bindActionCreators(TaskActions, dispatch),
       ...bindActionCreators(ApplicationActions, dispatch),
       ...bindActionCreators(SavedTaskActions, dispatch),
-      ...bindActionCreators(CommentActions, dispatch),
+      ...bindActionCreators(CommentActions, dispatch)
     },
     EstimateActions: bindActionCreators(EstimateActions, dispatch),
     QuoteActions: bindActionCreators(QuoteActions, dispatch),
-    MultiTasksPaymentActions: bindActionCreators(MultiTasksPaymentActions, dispatch)
+    MultiTasksPaymentActions: bindActionCreators(
+      MultiTasksPaymentActions,
+      dispatch
+    )
   };
 }
 
