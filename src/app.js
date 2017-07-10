@@ -104,6 +104,7 @@ import TaskWizard from "routes/TaskWizard";
 import StoryPage from "routes/StoryPage";
 import TaskWizardLander from "routes/TaskWizardLander";
 import Planning from "components/Planning";
+import MilestoneListContainer from "containers/MilestoneListContainer"
 
 ReactDOM.render(
   <Provider store={store}>
@@ -281,7 +282,7 @@ ReactDOM.render(
                 </Route>
                 <Route
                   path="planning"
-                  component={MilestoneContainer}
+                  component={MilestoneListContainer}
                   crumb="Planning"
                 >
                   <IndexRoute component={Planning} />

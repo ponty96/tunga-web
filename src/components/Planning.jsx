@@ -1,18 +1,10 @@
 import React from "react";
 import Progress from "./status/Progress";
-import _ from "lodash";
 import moment from "moment";
 
 export default class Planning extends React.Component {
-  componentWillMount() {
-    const { Milestone, MilestoneActions, params: { taskId } } = this.props;
-    MilestoneActions.listMilestones({
-      type: 3,
-      task_id: taskId
-    });
-  }
   render() {
-    const { Milestone: { list: { isFetching, milestones } } } = this.props;
+    const { isFetching, milestones } = this.props;
     if (isFetching) return <Progress />;
     return (
       <div>
