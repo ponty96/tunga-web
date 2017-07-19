@@ -35,18 +35,6 @@ export default class ShowcaseContainer extends React.Component {
               </video>
             : null}
           {this.props.headerVideo ? <div className="video-overlay" /> : null}
-          {this.props.hasArrow
-            ? <div className="arrow-overlay">
-                <div className="ribbon" />
-                <div
-                  className="pointer text-center"
-                  onClick={e => {
-                    $('body').animate({scrollTop: '+=300'});
-                  }}>
-                  show me how it works
-                </div>
-              </div>
-            : null}
           <Affix affixClassName="navbar-fixed-top" offsetTop={60}>
             <nav className="navbar navbar-fixed-top">
               <div className="navbar-header">
