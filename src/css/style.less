@@ -4559,4 +4559,17 @@ form[name="estimate-form"] {
   margin-left: 200px;
 }
 
+.flexCentered {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+	.flexCentered {
+    flex-direction: column;
+  }
+}
+
 @import "media";
