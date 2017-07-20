@@ -8,6 +8,7 @@ import ShowcaseContainer from '../containers/ShowcaseContainer';
 import ShowCaseFooter from '../containers/ShowCaseFooter';
 import ComponentWithModal from '../components/ComponentWithModal';
 import MetaTags from '../components/MetaTags';
+import StepSlider from '../components/StepSlider';
 
 import {showCallWidget, openCalendlyWidget} from '../utils/router';
 import {TESTIMONIALS} from '../constants/data';
@@ -19,25 +20,6 @@ import {
   GA_EVENT_LABELS,
 } from '../utils/tracking';
 
-const STEP_DETAILS = [
-  {
-    title: 'Tell us what you want to build.',
-    icon: 'tunga-icon-how-needs',
-  },
-  {
-    title: 'Tunga matches developers with objectively verified skills.',
-    icon: 'tunga-icon-how-matches',
-  },
-  {
-    title:
-      'Developers start working in your workflow or set one up for you.',
-    icon: 'tunga-icon-how-workflow',
-  },
-  {
-    title: 'Get daily feedback reports on progress & quality.',
-    icon: 'tunga-icon-how-feedback',
-  }
-];
 
 const NETWORK_EXPERTISE = [
   {
@@ -282,29 +264,7 @@ export default class LandingPage extends ComponentWithModal {
 					/>
 				</div>
 			</div>
-            <div className="step-slider four-sm clearfix">
-            	<ul>
-                	{STEP_DETAILS.map((step, idx) => {
-                    	return (
-                          <li key={idx}>
-                            <a
-                              href="#"
-                              onClick={this.onChangeSliderStep.bind(this, idx)}
-                              onMouseOver={this.onChangeSliderStep.bind(this, idx)}
-                              className={`slide ${this.state.step == idx
-                                ? 'active'
-                                : ''} animated fadeInRight`}
-                              style={{animationDelay: `${idx}s`}}>
-                              <div className="icon">
-                                <i className={step.icon} />
-                              </div>
-                              <span dangerouslySetInnerHTML={{__html: step.title}} />
-                            </a>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
+            <StepSlider />
           </div>
         </section>
 
