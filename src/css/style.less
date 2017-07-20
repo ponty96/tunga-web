@@ -3145,6 +3145,10 @@ form[name='compose'] {
           text-decoration: none;
           border-radius: 5px;
 
+          &.transparent {
+            background-color: transparent;
+          }
+
           .icon {
             .font-size(9.0);
             color: @primary;
@@ -3440,8 +3444,7 @@ form[name='compose'] {
           padding: 0 10px;
 
           .icon {
-            .font-size(6);
-            height: 90px;
+            .font-size(10);
           }
         }
       }
@@ -3493,11 +3496,11 @@ form[name='compose'] {
   #press {
     display: flex;
     align-items: center;
-    min-height: 25%;
     background-color: @inactive-grey;
 
     .container {
-      padding-top: 0;
+      padding-top: 25px;
+      padding-bottom: 25px;
     }
 
     .press-links {
@@ -3698,9 +3701,8 @@ form[name='compose'] {
     }
 
     .icon {
-      display: inline-block;
-      .font-size(5.5);
-      color: @blue;
+      display: block;
+      .font-size(8);
       margin: 10px 0;
     }
 

@@ -21,26 +21,41 @@ import {
 
 const STEP_DETAILS = [
   {
-    title: '1. Tell us what you need.',
-    icon: 'tunga-icon-post-task',
+    title: 'Tell us what you want to build.',
+    icon: 'tunga-icon-how-needs',
   },
   {
-    title: '2. Tunga matches developers with objectively verified skills.',
-    icon: 'tunga-icon-browse-developers',
+    title: 'Tunga matches developers with objectively verified skills.',
+    icon: 'tunga-icon-how-matches',
   },
   {
     title:
-      '3. Developers start working in your workflow or set one up for you.',
-    icon: 'tunga-icon-manage-tasks',
+      'Developers start working in your workflow or set one up for you.',
+    icon: 'tunga-icon-how-workflow',
   },
   {
-    title: '4. Get daily feedback reports on progress & quality.',
-    icon: 'tunga-icon-build-network',
+    title: 'Get daily feedback reports on progress & quality.',
+    icon: 'tunga-icon-how-feedback',
+  }
+];
+
+const NETWORK_EXPERTISE = [
+  {
+	title: 'Full stack capacity for web API development All Popular JS frameworks Backend Development',
+    icon: 'tunga-icon-service-web',
   },
   {
-    title: '5. Effortless payments & invoice overview.',
-    icon: 'tunga-icon-make-transaction',
+	title: 'Excellent Native App Development Dedicated iOS and Android Teams App maintenance and improvements',
+    icon: 'tunga-icon-service-app',
   },
+  {
+	title: 'Dedicated Project Managers Available Daily updates from developers Full Overview of progress',
+    icon: 'tunga-icon-service-pm',
+  },
+  {
+    title: 'Easily customize your workflow with Slack, Trello, Google Drive and Github on Tunga',
+    icon: 'tunga-icon-service-workflow',
+  }
 ];
 
 export default class LandingPage extends ComponentWithModal {
@@ -246,101 +261,57 @@ export default class LandingPage extends ComponentWithModal {
         chatId={this.props.params ? this.props.params.chatId : null}>
         <MetaTags title={meta_title} description={meta_description} />
 
-        <section id="how-it-works">
-          <div className="container">
-            <div className="section-heading text-center">How it works</div>
-            <div className="step-slider five-sm clearfix">
-              <ul>
-                {STEP_DETAILS.map((step, idx) => {
-                  return (
-                    <li key={idx}>
-                      <a
-                        href="#"
-                        onClick={this.onChangeSliderStep.bind(this, idx)}
-                        onMouseOver={this.onChangeSliderStep.bind(this, idx)}
-                        className={`slide ${this.state.step == idx
-                          ? 'active'
-                          : ''} animated fadeInRight`}
-                        style={{animationDelay: `${idx}s`}}>
-                        <div className="icon">
-                          <i className={step.icon} />
-                        </div>
-                        <span dangerouslySetInnerHTML={{__html: step.title}} />
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section id="platform-info">
+        <section id="video-section">
           <div className="container">
             <div className="row">
-              <div className="col-md-5">
-                <div className="workflow">
-                  <div className="step">
-                    <Reveal
-                      effect="animated fadeIn"
-                      onReveal={this.onRevealNumber.bind(
-                        this,
-                        'platform-devs',
-                      )}>
-                      <div className="highlight" id="platform-devs">
-                        154
-                      </div>
-                      <div>developers</div>
-                    </Reveal>
+				<div className="col-md-5">
+				<section id="how-it-works">
+					<div className="section-heading text-center">How we make it easy</div>
+					<p>
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+					</p>
+				</section>
+				</div>
+				<div className="col-md-1" />
+				<div className="col-md-6">
+				<YouTube
+					videoId="RVVtyapBmuo"
+					opts={this.state.youtubeOpts}
+					onReady={this.onVideoReady.bind(this)}
+					onPause={this.onPauseVideo.bind(this)}
+					/>
+				</div>
+			</div>
+            <div className="step-slider four-sm clearfix">
+            	<ul>
+                	{STEP_DETAILS.map((step, idx) => {
+                    	return (
+                          <li key={idx}>
+                            <a
+                              href="#"
+                              onClick={this.onChangeSliderStep.bind(this, idx)}
+                              onMouseOver={this.onChangeSliderStep.bind(this, idx)}
+                              className={`slide ${this.state.step == idx
+                                ? 'active'
+                                : ''} animated fadeInRight`}
+                              style={{animationDelay: `${idx}s`}}>
+                              <div className="icon">
+                                <i className={step.icon} />
+                              </div>
+                              <span dangerouslySetInnerHTML={{__html: step.title}} />
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-
-                  <div className="step">
-                    <Reveal
-                      effect="animated fadeIn"
-                      onReveal={this.onRevealNumber.bind(
-                        this,
-                        'platform-skills',
-                      )}>
-                      <div className="highlight" id="platform-skills">
-                        89
-                      </div>
-                      <div>different coding skills</div>
-                    </Reveal>
-                  </div>
-
-                  <div className="step">
-                    <Reveal
-                      effect="animated fadeIn"
-                      onReveal={this.onRevealNumber.bind(
-                        this,
-                        'platform-code',
-                      )}>
-                      <div className="highlight" id="platform-code">
-                        698562
-                      </div>
-                      <div>lines of code written</div>
-                    </Reveal>
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-7">
-                <YouTube
-                  videoId="RVVtyapBmuo"
-                  opts={this.state.youtubeOpts}
-                  onReady={this.onVideoReady.bind(this)}
-                  onPause={this.onPauseVideo.bind(this)}
-                />
-              </div>
-            </div>
           </div>
         </section>
+
         <section id="press">
           <div className="container ">
             <Reveal effect="animated fadeInLeft">
               <div>
-                <div className="section-heading text-center">
-                  Tunga in the press
-                </div>
                 <ul className="press-links">
                   <li>
                     <a
@@ -402,9 +373,14 @@ export default class LandingPage extends ComponentWithModal {
             </Reveal>
           </div>
         </section>
+
+		<section id="image-section">
+			<a>How we verifiy our Developers</a>
+		</section>
+
         <section id="clients-testmonial">
           <div className="container">
-            <div className="section-heading text-center">Testimonials</div>
+            <div className="section-heading text-center">What our clients say</div>
             <Slider
               className="testimonials-slider text-center"
               {...slider_settings}>
@@ -436,104 +412,87 @@ export default class LandingPage extends ComponentWithModal {
                 );
               })}
             </Slider>
-            <div className="text-center" style={{marginTop: '40px'}}>
-              <button
-                className="btn btn-callout"
-                onClick={this.onScheduleCall.bind(this)}>
-                Schedule call
-              </button>
-            </div>
           </div>
         </section>
+
         <section id="what-we-can-do">
           <div className="container">
-            <Reveal effect="animated fadeIn">
-              <div>
-                <div className="section-heading text-center">
-                  What we can do
-                </div>
-                <div className="row">
-                  <div className="col-sm-4" id="building-websites">
-                    <Reveal effect="animated rollIn">
-                      <i className="icon tunga-icon-do-web" />
-                    </Reveal>
-                    <p>
-                      Full stack capacity for web<br />
-                      API development<br />
-                      All popular JS frameworks capacity<br />
-                      Backend development
-                    </p>
+            <div className="step-slider four-sm clearfix">
+            	<ul>
+                	{NETWORK_EXPERTISE.map((step, idx) => {
+                    	return (
+                          <li key={idx}>
+                            <a
+                              href="#"
+                              onClick={this.onChangeSliderStep.bind(this, idx)}
+                              onMouseOver={this.onChangeSliderStep.bind(this, idx)}
+                              className={`slide transparent ${this.state.step == idx
+                                ? 'active'
+                                : ''} animated fadeInRight`}
+                              style={{animationDelay: `${idx}s`}}>
+                              <div className="icon">
+                                <i className={step.icon} />
+                              </div>
+                              <span dangerouslySetInnerHTML={{__html: step.title}} />
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                  <div className="col-sm-4" id="solving-issues">
-                    <Reveal effect="animated rollIn">
-                      <i className="icon tunga-icon-do-workflow" />
-                    </Reveal>
-                    <p>
-                      Integrations with your current workflow<br />
-                      Slack, Trello, Github, Drive etc.<br />
-                      Or set up a custom workflow on Tunga<br />
-                      <Link to="/start">
-                        Find out how this will work for you
-                      </Link>
-                    </p>
-                  </div>
-                  <div className="col-sm-4" id="full-stack">
-                    <Reveal effect="animated rollIn">
-                      <i className="icon tunga-icon-do-pm" />
-                    </Reveal>
-                    <p>
-                      Excellent Project manager available<br />
-                      Daily updates from developers<br />
-                      Full overview of the progress<br />
-                      <Link to="/start/">Start a project now</Link>
-                    </p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-offset-1 col-sm-5" id="mobile-app">
-                    <Reveal effect="animated rollIn">
-                      <i className="icon tunga-icon-do-app" />
-                    </Reveal>
-                    <p>
-                      Excellent native app development<br />
-                      Specialized iOS and Android teams<br />
-                      App maintenance and improvements<br />
-                      From idea to application
-                    </p>
-                  </div>
-                  <div className="col-sm-5" id="html-slicing">
-                    <Reveal effect="animated rollIn">
-                      <i className="icon tunga-icon-do-slice" />
-                    </Reveal>
-                    <p>
-                      Slicing experts on demand<br />
-                      From PSD, Sketch or AI to webpage<br />
-                      All popular CMS<br />
-                      Ready within days
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
           </div>
         </section>
-        <section id="video-overlay" className={this.state.play ? 'on' : ''}>
-          <div className={`modal-backdrop fade in`} />
-          <div className="video-close">
-            <button
-              className="btn btn-borderless"
-              title="Close"
-              onClick={this.onCloseVideo.bind(this)}>
-              <i className="fa fa-times fa-lg" />
-            </button>
-          </div>
+
+		<section id="network-section">
+			<div className="container">
+				<div className="col-md-4">
+					<h2 className="figure">154</h2>
+					<span className="desc">Developers and project managers</span>
+				</div>
+				<div className="col-md-4">
+					<h2 className="figure">89</h2>
+					<span className="desc">Different Development Skils Available</span>
+				</div>
+				<div className="col-md-4">
+					<h2 className="figure">70k+</h2>
+					<span className="desc">Lnes of code written</span>
+				</div>
+			</div>
+		</section>
+
+        <section id="clients-testmonial">
           <div className="container">
-            <YouTube
-              videoId="FQHxc5VNs7A"
-              opts={{height: '80%', width: '100%'}}
-              onReady={this.onVideoReady.bind(this)}
-              onPause={this.onPauseVideo.bind(this)}
-            />
+            <div className="section-heading text-center">Search Developers on Tunga</div>
+			 <div className="col-md-push-1 col-md-4 text-center padBottom">
+				 <h5>.NET Development</h5>
+				 <h5>Android Development</h5>
+				 <h5>Angular Development</h5>
+				 <h5>C# Development</h5>
+				 <h5>C++ Development</h5>
+				 <h5>Cake.PHP Development</h5>
+				 <h5>Cordova Development</h5>
+				 <h5>Django Development</h5>
+			 </div>
+			 <div className="col-md-push-1 col-md-4 text-center padBottom">
+				 <h5>.NET Development</h5>
+				 <h5>Android Development</h5>
+				 <h5>Angular Development</h5>
+				 <h5>C# Development</h5>
+				 <h5>C++ Development</h5>
+				 <h5>Cake.PHP Development</h5>
+				 <h5>Cordova Development</h5>
+				 <h5>Django Development</h5>
+			 </div>
+			 <div className="col-md-push-1 col-md-4 text-center padBottom">
+				 <h5>.NET Development</h5>
+				 <h5>Android Development</h5>
+				 <h5>Angular Development</h5>
+				 <h5>C# Development</h5>
+				 <h5>C++ Development</h5>
+				 <h5>Cake.PHP Development</h5>
+				 <h5>Cordova Development</h5>
+				 <h5>Django Development</h5>
+			 </div>
           </div>
         </section>
 

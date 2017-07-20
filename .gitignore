@@ -32,3 +32,4 @@ build
 tmp
 .idea
 .vscode
+*.DS_STORE
